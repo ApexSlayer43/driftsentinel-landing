@@ -229,15 +229,16 @@ nav{
 
 /* BSS right — glass data panel */
 .bss-panel{
-  background:var(--glass);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border:1px solid var(--glass-border);
+  background:rgba(200,169,110,0.03);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(200,169,110,0.08);
   position:relative;overflow:hidden;
   padding:8px 28px;
+  box-shadow:inset 0 1px 0 rgba(200,169,110,0.06),0 0 60px rgba(200,169,110,0.03);
 }
 .bss-panel::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(200,169,110,.2),transparent);
+  background:linear-gradient(90deg,transparent,rgba(200,169,110,.25),transparent);
 }
 .dp{
   display:flex;align-items:baseline;justify-content:space-between;
@@ -318,19 +319,23 @@ nav{
 }
 .senti-grid{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:2px;background:rgba(255,255,255,.04);
+  gap:12px;
   max-width:900px;margin:0 auto;text-align:left;
 }
 .sc{
-  background:var(--bg2);padding:36px;
+  background:rgba(200,169,110,0.03);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(200,169,110,0.06);
+  padding:36px;
   position:relative;overflow:hidden;
-  transition:background .3s;
+  transition:background .3s,border-color .3s;
+  box-shadow:inset 0 1px 0 rgba(200,169,110,0.05);
 }
 .sc::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(200,169,110,.12),transparent);
+  background:linear-gradient(90deg,transparent,rgba(200,169,110,.15),transparent);
 }
-.sc:hover{background:rgba(255,255,255,.025)}
+.sc:hover{background:rgba(200,169,110,0.05);border-color:rgba(200,169,110,0.12)}
 .sc-mode{
   font-family:var(--mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--muted);margin-bottom:18px;
@@ -363,17 +368,21 @@ nav{
 .cp-t{font-family:var(--serif);font-size:15px;font-weight:300;color:rgba(237,233,225,.65);line-height:1.6}
 .cp-t strong{color:var(--white);font-weight:400}
 
-/* ID Card */
+/* ID Card — premium glass */
 .id-card{
-  background:rgba(10,15,12,.75);
-  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
-  border:1px solid rgba(200,169,110,.2);
+  background:rgba(200,169,110,0.04);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(200,169,110,.15);
   padding:40px;position:relative;overflow:hidden;
-  box-shadow:0 0 80px rgba(200,169,110,.06);
+  box-shadow:inset 0 1px 0 rgba(200,169,110,0.08),0 0 80px rgba(200,169,110,.04),0 24px 48px rgba(0,0,0,.3);
 }
 .id-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.id-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,169,110,.08),transparent);
 }
 .id-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--rule)}
 .id-brand-t{font-family:var(--mono);font-size:7px;letter-spacing:.4em;text-transform:uppercase;color:var(--muted);display:block}
@@ -450,14 +459,15 @@ nav{
 .board-live-dot{width:5px;height:5px;border-radius:50%;background:rgba(200,169,110,.85);animation:pulse 2.4s ease-in-out infinite}
 
 .board-glass{
-  background:rgba(10,15,12,.7);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border:1px solid rgba(200,169,110,.18);
+  background:rgba(200,169,110,0.03);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(200,169,110,.12);
   position:relative;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(200,169,110,0.06),0 0 60px rgba(200,169,110,0.03);
 }
 .board-glass::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(200,169,110,.3),transparent);
+  background:linear-gradient(90deg,transparent,rgba(200,169,110,.25),transparent);
 }
 
 .be{
