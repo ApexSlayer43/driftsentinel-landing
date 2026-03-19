@@ -12,20 +12,19 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --bg:#080c0a;
-  --bg2:#0a0f0c;
+  --bg:#080a0e;
+  --bg2:#0a0c10;
   --white:#ede9e1;
-  --muted:#4a5248;
-  --dim:#1a1f1c;
+  --muted:#7a766d;
+  --dim:#1a1d1c;
   --gold:#c8a96e;
-  --green:#4a7c59;
-  --green-glow:rgba(60,120,70,0.35);
-  --green-soft:rgba(80,160,90,0.12);
+  --gold-glow:rgba(200,169,110,0.35);
+  --gold-soft:rgba(200,169,110,0.12);
   --rule:rgba(255,255,255,0.06);
   --serif:'Cormorant Garamond',serif;
   --mono:'JetBrains Mono',monospace;
-  --glass:rgba(10,15,12,0.65);
-  --glass-border:rgba(255,255,255,0.08);
+  --glass:rgba(8,10,14,0.65);
+  --glass-border:rgba(200,169,110,0.08);
 }
 
 html{scroll-behavior:smooth}
@@ -48,41 +47,9 @@ body::after{
   opacity:0.5;mix-blend-mode:overlay;
 }
 
-/* ── STARS CANVAS ── */
-#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.7}
 
-/* ── AURORA ── */
-.aurora{
-  position:fixed;
-  pointer-events:none;
-  z-index:1;
-  border-radius:50%;
-  filter:blur(80px);
-  animation:auroraDrift 18s ease-in-out infinite;
-}
-.aurora-1{
-  width:600px;height:700px;
-  right:-100px;top:0;
-  background:radial-gradient(ellipse,rgba(50,120,60,0.28) 0%,transparent 70%);
-  animation-duration:20s;
-}
-.aurora-2{
-  width:400px;height:500px;
-  right:100px;top:200px;
-  background:radial-gradient(ellipse,rgba(40,100,50,0.18) 0%,transparent 70%);
-  animation-duration:25s;animation-delay:-8s;
-}
-.aurora-3{
-  width:300px;height:400px;
-  left:-50px;bottom:30%;
-  background:radial-gradient(ellipse,rgba(30,80,40,0.12) 0%,transparent 70%);
-  animation-duration:30s;animation-delay:-15s;
-}
-@keyframes auroraDrift{
-  0%,100%{transform:translateY(0) scaleX(1)}
-  33%{transform:translateY(-40px) scaleX(1.08)}
-  66%{transform:translateY(30px) scaleX(0.94)}
-}
+/* ── NEBULA CANVAS ── */
+#nebula{position:fixed;inset:0;z-index:1;pointer-events:none}
 
 /* ── NAV ── */
 nav{
@@ -90,7 +57,7 @@ nav{
   z-index:500;
   padding:24px 56px;
   display:flex;align-items:center;justify-content:space-between;
-  background:linear-gradient(to bottom,rgba(8,12,10,0.9) 0%,transparent 100%);
+  background:linear-gradient(to bottom,rgba(8,10,14,0.9) 0%,transparent 100%);
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
 }
@@ -127,13 +94,13 @@ nav{
 .hero-badge{
   display:inline-flex;align-items:center;gap:10px;
   font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;
-  color:rgba(74,124,89,0.9);
+  color:rgba(200,169,110,0.9);
   margin-bottom:40px;
   padding:7px 16px;
-  border:1px solid rgba(74,124,89,0.25);
-  background:rgba(74,124,89,0.06);
+  border:1px solid rgba(200,169,110,0.25);
+  background:rgba(200,169,110,0.06);
 }
-.hero-badge-dot{width:5px;height:5px;border-radius:50%;background:rgba(74,124,89,0.9);animation:pulse 2s ease-in-out infinite}
+.hero-badge-dot{width:5px;height:5px;border-radius:50%;background:rgba(200,169,110,0.9);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
 
 .hero-h1{
@@ -253,7 +220,7 @@ nav{
   color:var(--gold);border:1px solid rgba(200,169,110,.25);
   padding:5px 14px;margin-top:16px;
 }
-.bss-delta{font-family:var(--mono);font-size:13px;color:rgba(74,124,89,.85);margin-top:12px}
+.bss-delta{font-family:var(--mono);font-size:13px;color:rgba(200,169,110,.85);margin-top:12px}
 .bss-caption{
   font-family:var(--serif);font-size:16px;font-weight:300;
   line-height:1.75;color:rgba(237,233,225,.45);
@@ -402,7 +369,7 @@ nav{
   backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
   border:1px solid rgba(200,169,110,.2);
   padding:40px;position:relative;overflow:hidden;
-  box-shadow:0 0 80px rgba(50,120,60,.06);
+  box-shadow:0 0 80px rgba(200,169,110,.06);
 }
 .id-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:2px;
@@ -430,7 +397,7 @@ nav{
 .beta-glow{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   width:600px;height:600px;border-radius:50%;
-  background:radial-gradient(circle,rgba(74,124,89,.06) 0%,transparent 70%);
+  background:radial-gradient(circle,rgba(200,169,110,.06) 0%,transparent 70%);
   pointer-events:none;
 }
 .beta-ghost{
@@ -479,8 +446,8 @@ nav{
   margin-bottom:20px;
 }
 .board-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-.board-live{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:rgba(74,124,89,.7)}
-.board-live-dot{width:5px;height:5px;border-radius:50%;background:rgba(74,124,89,.85);animation:pulse 2.4s ease-in-out infinite}
+.board-live{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:rgba(200,169,110,.7)}
+.board-live-dot{width:5px;height:5px;border-radius:50%;background:rgba(200,169,110,.85);animation:pulse 2.4s ease-in-out infinite}
 
 .board-glass{
   background:rgba(10,15,12,.7);
@@ -553,18 +520,18 @@ footer{
 /* ── STATUS BAR ── */
 #sb{
   position:fixed;top:0;left:0;right:0;z-index:600;
-  height:26px;background:rgba(8,12,10,.95);
-  border-bottom:1px solid rgba(74,124,89,.15);
+  height:26px;background:rgba(8,10,14,.95);
+  border-bottom:1px solid rgba(200,169,110,.15);
   overflow:hidden;display:flex;align-items:center;
 }
 .sb-track{
   display:flex;align-items:center;gap:18px;white-space:nowrap;
   animation:sbScroll 28s linear infinite;padding-left:100%;
 }
-.sb-item{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(74,90,78,.9)}
-.sb-live{color:rgba(74,124,89,.75)}
+.sb-item{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(200,169,110,.9)}
+.sb-live{color:rgba(200,169,110,.75)}
 .sb-sep{color:rgba(255,255,255,.08);font-family:var(--mono);font-size:8px}
-.sb-dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:rgba(74,124,89,.9);animation:pulse 2.4s ease-in-out infinite;vertical-align:middle;margin-right:2px}
+.sb-dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:rgba(200,169,110,.9);animation:pulse 2.4s ease-in-out infinite;vertical-align:middle;margin-right:2px}
 @keyframes sbScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ── KEYFRAMES ── */
@@ -619,13 +586,9 @@ footer{
   </div>
 </div>
 
-<!-- AURORA -->
-<div class="aurora aurora-1"></div>
-<div class="aurora aurora-2"></div>
-<div class="aurora aurora-3"></div>
+<!-- NEBULA -->
+<canvas id="nebula"></canvas>
 
-<!-- STARS -->
-<canvas id="stars"></canvas>
 
 <!-- NAV -->
 <nav id="nav" style="top:26px">
@@ -660,8 +623,8 @@ footer{
             <circle cx="17.8" cy="11.8" r="0.6" fill="white" opacity="0.6"/>
           </g>
           <!-- Lids -->
-          <path id="uL" d="M0,13 C0,13 7,3 19,3 C31,3 38,13 38,13 L38,3 C31,1 7,1 0,3 Z" fill="#080c0a" opacity="0"/>
-          <path id="lL" d="M0,13 C0,13 7,23 19,23 C31,23 38,13 38,13 L38,23 C31,25 7,25 0,23 Z" fill="#080c0a" opacity="0"/>
+          <path id="uL" d="M0,13 C0,13 7,3 19,3 C31,3 38,13 38,13 L38,3 C31,1 7,1 0,3 Z" fill="#080a0e" opacity="0"/>
+          <path id="lL" d="M0,13 C0,13 7,23 19,23 C31,23 38,13 38,13 L38,23 C31,25 7,25 0,23 Z" fill="#080a0e" opacity="0"/>
         </g>
         <!-- H ticks -->
         <line x1="-4" y1="13" x2="0" y2="13" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" filter="url(#eg)"/>
@@ -679,7 +642,7 @@ footer{
       
     </div>
   </a>
-  <a href="#beta" class="nav-cta">Request Access</a>
+  <a href="https://app.driftsentinel.io" class="nav-cta">Enter Beta</a>
 </nav>
 
 <!-- HERO -->
@@ -697,7 +660,7 @@ footer{
   </p>
   <p class="hero-sub">PnL + BSS · Discipline is Edge</p>
   <div class="hero-actions">
-    <a href="#beta" class="btn-main">Upload your first session</a>
+    <a href="https://app.driftsentinel.io" class="btn-main">Join the Beta</a>
     <a href="#timeline" class="btn-ghost">See how it works</a>
   </div>
   <div class="hero-scroll">
@@ -852,11 +815,10 @@ footer{
 <section id="beta">
   <div class="beta-glow"></div>
   <div class="beta-ghost">30</div>
-  <h2 class="beta-h">The <em>30-day</em> challenge.</h2>
-  <p class="beta-sub">The first cohort. Real data. Real scores. The goal: reach <strong>Disciplined tier — BSS 75 or above</strong> — by day 30. The leaderboard opens when you upload your first session.</p>
-  <div class="beta-form">
-    <input class="beta-input" type="email" placeholder="your@email.com" id="betaEmail">
-    <button class="beta-btn" onclick="handleBeta()">Join the Cohort</button>
+  <h2 class="beta-h">Beta is <em>live.</em></h2>
+  <p class="beta-sub">The first cohort is trading. Real data. Real scores. The goal: reach <strong>Disciplined tier — BSS 75 or above</strong>. The leaderboard opens when you upload your first session.</p>
+  <div style="margin:0 auto 16px;text-align:center">
+    <a href="https://app.driftsentinel.io" class="btn-main" style="display:inline-block;font-size:12px;padding:18px 48px">Enter the Beta</a>
   </div>
   <p class="beta-note">No credit card. Brutal feedback welcome.</p>
 
@@ -908,28 +870,86 @@ footer{
 </footer>
 
 <script>
-// ── STARS ─────────────────────────────────────────────────────────────────
+// ── GOLD NEBULA (WebGL) ──────────────────────────────────────────────────
 (function(){
-  var c=document.getElementById('stars');
-  var ctx=c.getContext('2d');
-  var stars=[];
-  function resize(){c.width=window.innerWidth;c.height=window.innerHeight}
-  function init(){
-    stars=[];
-    var n=Math.floor(c.width*c.height/5000);
-    for(var i=0;i<n;i++)stars.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.1,a:Math.random(),sp:Math.random()*.003+.001,ph:Math.random()*Math.PI*2});
+  var c=document.getElementById('nebula');
+  if(!c)return;
+  var gl=c.getContext('webgl');
+  if(!gl)return;
+
+  var vs=`attribute vec2 p;varying vec2 vUv;void main(){vUv=p*.5+.5;gl_Position=vec4(p,0,1);}`;
+  var fs=`precision highp float;
+varying vec2 vUv;
+uniform vec2 u_res;
+uniform float u_time;
+uniform vec2 u_mouse;
+
+vec3 hsl2rgb(vec3 c){
+  vec3 rgb=clamp(abs(mod(c.x*6.0+vec3(0,4,2),6.0)-3.0)-1.0,0.0,1.0);
+  return c.z*mix(vec3(1),rgb,c.y);
+}
+float hash(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
+float noise(vec2 p){
+  vec2 i=floor(p),f=fract(p);
+  float a=hash(i),b=hash(i+vec2(1,0)),c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1));
+  vec2 u=f*f*(3.0-2.0*f);
+  return mix(a,b,u.x)+(c-a)*u.y*(1.0-u.x)+(d-b)*u.y*u.x;
+}
+float fbm(vec2 p){float v=0.0,a=0.5;for(int i=0;i<6;i++){v+=a*noise(p);p*=2.0;a*=0.5;}return v;}
+
+void main(){
+  vec2 uv=(gl_FragCoord.xy-0.5*u_res)/min(u_res.y,u_res.x)*1.4;
+  vec2 mn=u_mouse/u_res;
+  uv+=(mn-0.5)*0.8;
+  float f=fbm(uv+vec2(u_time*0.1,u_time*0.05));
+  float t=fbm(uv+f+vec2(u_time*0.05,u_time*0.02));
+  float neb=pow(t,2.0);
+  vec3 col=hsl2rgb(vec3(40.0/360.0+neb*0.15,0.7,0.5))*neb*2.2;
+  float sv=hash(vUv*500.0);
+  if(sv>0.998){float b=(sv-0.998)/0.002;col+=mix(vec3(1,.95,.85),vec3(1),b)*b*3.0;}
+  float sv2=hash(vUv*850.0+vec2(42,17));
+  if(sv2>0.997){float b2=(sv2-0.997)/0.003;col+=vec3(.9,.88,.82)*b2*0.4;}
+  gl_FragColor=vec4(col,1);
+}`;
+
+  function mkS(t,s){var sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh;}
+  var pg=gl.createProgram();
+  gl.attachShader(pg,mkS(gl.VERTEX_SHADER,vs));
+  gl.attachShader(pg,mkS(gl.FRAGMENT_SHADER,fs));
+  gl.linkProgram(pg);gl.useProgram(pg);
+
+  var buf=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  var pA=gl.getAttribLocation(pg,'p');
+  gl.enableVertexAttribArray(pA);
+  gl.vertexAttribPointer(pA,2,gl.FLOAT,false,0,0);
+
+  var uRes=gl.getUniformLocation(pg,'u_res');
+  var uTime=gl.getUniformLocation(pg,'u_time');
+  var uMouse=gl.getUniformLocation(pg,'u_mouse');
+  var time=0,mx=0,my=0;
+
+  function resize(){
+    var dpr=Math.min(window.devicePixelRatio,2);
+    c.width=window.innerWidth*dpr;c.height=window.innerHeight*dpr;
+    c.style.width=window.innerWidth+'px';c.style.height=window.innerHeight+'px';
+    gl.viewport(0,0,c.width,c.height);
   }
-  function draw(t){
-    ctx.clearRect(0,0,c.width,c.height);
-    stars.forEach(function(s){
-      s.a=0.25+0.35*Math.sin(t*s.sp+s.ph);
-      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(255,255,255,'+s.a+')';ctx.fill();
-    });
+  function draw(){
+    time+=0.0015;
+    gl.uniform2f(uRes,c.width,c.height);
+    gl.uniform1f(uTime,time);
+    gl.uniform2f(uMouse,mx,my);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
     requestAnimationFrame(draw);
   }
-  resize();init();
-  window.addEventListener('resize',function(){resize();init();});
+  window.addEventListener('mousemove',function(e){
+    var dpr=Math.min(window.devicePixelRatio,2);
+    mx=e.clientX*dpr;my=(window.innerHeight-e.clientY)*dpr;
+  });
+  resize();
+  window.addEventListener('resize',resize);
   requestAnimationFrame(draw);
 })();
 
@@ -981,7 +1001,7 @@ footer{
 // ── NAV SCROLL ────────────────────────────────────────────────────────────
 window.addEventListener('scroll',function(){
   var nav=document.getElementById('nav');
-  if(nav)nav.style.background=window.scrollY>40?'rgba(8,12,10,0.92)':'linear-gradient(to bottom,rgba(8,12,10,0.9) 0%,transparent 100%)';
+  if(nav)nav.style.background=window.scrollY>40?'rgba(8,10,14,0.92)':'linear-gradient(to bottom,rgba(8,10,14,0.9) 0%,transparent 100%)';
 },{passive:true});
 
 // ── SCORE COUNTERS ────────────────────────────────────────────────────────
@@ -1018,15 +1038,6 @@ countTo(document.getElementById('lbScore'),65,1800);
   },{threshold:0.2}).observe(p);
 })();
 
-// ── BETA FORM ─────────────────────────────────────────────────────────────
-function handleBeta(){
-  var em=document.getElementById('betaEmail').value;
-  if(!em||!em.includes('@'))return;
-  var btn=document.querySelector('.beta-btn');
-  btn.textContent='Sent ✓';
-  btn.style.background='#c8a96e';
-  btn.disabled=true;
-}
 </script>
 </body>
 </html>
