@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Drift Sentinel — Discipline is Edge</title>
-<meta name="description" content="A behavioral credit score for traders. Your discipline profile built from real data — not screenshots, not claims.">
+<title>Drift Sentinel — Pre-Purchase Prop Firm Compliance Scoring</title>
+<meta name="description" content="Score your trades against any prop firm's ruleset before you pay for an evaluation. Upload your history. Pick your firm. Know if you'd pass.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -25,6 +25,12 @@
   --mono:'JetBrains Mono',monospace;
   --glass:rgba(8,10,14,0.65);
   --glass-border:rgba(200,169,110,0.08);
+  --pass:#22D3EE;
+  --pass-bg:rgba(34,211,238,0.08);
+  --pass-border:rgba(34,211,238,0.25);
+  --fail:#FB923C;
+  --fail-bg:rgba(251,146,60,0.08);
+  --fail-border:rgba(251,146,60,0.25);
 }
 
 html{scroll-behavior:smooth}
@@ -37,7 +43,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-/* ── GRAIN ── */
+/* -- GRAIN -- */
 body::after{
   content:'';
   position:fixed;inset:0;
@@ -47,11 +53,10 @@ body::after{
   opacity:0.5;mix-blend-mode:overlay;
 }
 
-
-/* ── NEBULA CANVAS ── */
+/* -- NEBULA CANVAS -- */
 #nebula{position:fixed;inset:0;z-index:1;pointer-events:none}
 
-/* ── NAV ── */
+/* -- NAV -- */
 nav{
   position:fixed;top:0;left:0;right:0;
   z-index:500;
@@ -64,24 +69,29 @@ nav{
 
 .nav-logo{display:flex;align-items:center;gap:14px;text-decoration:none}
 
-/* Eye mark */
 .nav-eye-wrap{width:38px;height:26px;flex-shrink:0;position:relative}
 .nav-eye-wrap svg{overflow:visible;width:100%;height:100%}
 
 .nav-word{display:flex;flex-direction:column;gap:1px}
 .nav-d{font-family:var(--mono);font-size:7px;font-weight:300;letter-spacing:.45em;text-transform:uppercase;color:var(--muted);line-height:1}
 .nav-s{font-family:var(--mono);font-size:15px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--white);line-height:1}
-.nav-w{display:none}
 
-.nav-cta{
+.nav-links{display:flex;align-items:center;gap:24px}
+.nav-link{
   font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--muted);text-decoration:none;
-  padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.15);
-  transition:color .3s,border-color .3s;
+  padding:9px 0;
+  transition:color .3s;
 }
-.nav-cta:hover{color:var(--white);border-color:rgba(255,255,255,0.4)}
+.nav-link:hover{color:var(--white)}
+.nav-cta{
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  padding:10px 24px;background:var(--white);color:var(--bg);
+  text-decoration:none;transition:all .25s;display:inline-block;
+}
+.nav-cta:hover{background:var(--gold)}
 
-/* ── HERO ── */
+/* -- HERO -- */
 #hero{
   min-height:100vh;
   display:flex;flex-direction:column;
@@ -105,9 +115,9 @@ nav{
 
 .hero-h1{
   font-family:var(--serif);font-weight:300;
-  font-size:clamp(56px,8vw,116px);
+  font-size:clamp(48px,7vw,100px);
   line-height:.96;letter-spacing:-.01em;
-  margin-bottom:20px;
+  margin-bottom:28px;
   opacity:0;animation:fadeUp .9s .2s forwards;
   text-shadow:0 4px 30px rgba(0,0,0,0.6);
 }
@@ -115,25 +125,18 @@ nav{
 
 .hero-h2{
   font-family:var(--serif);font-weight:300;
-  font-size:clamp(22px,3vw,36px);
-  line-height:1.1;letter-spacing:.01em;
-  color:rgba(237,233,225,.75);
+  font-size:clamp(18px,2.2vw,28px);
+  line-height:1.4;letter-spacing:.01em;
+  color:rgba(237,233,225,.65);
   margin-bottom:48px;
+  max-width:680px;
   opacity:0;animation:fadeUp .8s .4s forwards;
   text-shadow:0 2px 20px rgba(0,0,0,0.5);
-}
-.hero-h2 strong{color:rgba(237,233,225,.92);font-weight:300}
-
-.hero-sub{
-  font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--white);margin-bottom:56px;
-  opacity:0;animation:fadeUp .7s .55s forwards;
-  text-shadow:0 1px 12px rgba(0,0,0,0.6);
 }
 
 .hero-actions{
   display:flex;gap:20px;align-items:center;justify-content:center;flex-wrap:wrap;
-  opacity:0;animation:fadeUp .7s .7s forwards;
+  opacity:0;animation:fadeUp .7s .6s forwards;
 }
 .btn-main{
   font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
@@ -149,7 +152,6 @@ nav{
 }
 .btn-ghost:hover{color:var(--white);border-color:rgba(255,255,255,.3)}
 
-/* Scroll indicator */
 .hero-scroll{
   position:absolute;bottom:48px;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:10px;
@@ -158,368 +160,280 @@ nav{
 .hero-scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.2))}
 .hero-scroll-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 
-/* ── DIVIDER ── */
+/* -- DIVIDER -- */
 .rule{
   position:relative;z-index:2;
   height:1px;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);
 }
 
-/* ── STATEMENT ── */
-#statement{
-  position:relative;z-index:2;
-  padding:140px 56px;
-}
-.stmt-inner{max-width:860px;margin:0 auto}
-.stmt-label{
+/* -- SECTION TAG -- */
+.sec-tag{
   font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:56px;
+  color:var(--muted);margin-bottom:20px;
   display:flex;align-items:center;gap:14px;
 }
-.stmt-label::before{content:'';display:block;width:28px;height:1px;background:var(--muted)}
+.sec-tag::before{content:'';display:block;width:28px;height:1px;background:var(--muted)}
 
-.stmt-lines{display:flex;flex-direction:column;gap:0}
-.sl{
-  font-family:var(--serif);font-size:clamp(28px,3.5vw,46px);
-  font-weight:300;line-height:1.3;
-  color:rgba(237,233,225,.38);
-  padding:22px 0;border-bottom:1px solid transparent;
-  display:flex;align-items:baseline;gap:18px;
-  transition:color .4s,border-color .4s;
-}
-.sl:hover{color:rgba(237,233,225,.82);border-bottom-color:rgba(200,169,110,.12)}
-.sl-n{font-family:var(--mono);font-size:9px;color:var(--muted);flex-shrink:0;letter-spacing:.08em;min-width:22px}
-.sl.accent{color:rgba(237,233,225,.88)}
-.sl.accent em{font-style:italic;color:var(--gold)}
-.sl.final{
-  font-size:clamp(13px,1.4vw,18px);font-family:var(--mono);
-  letter-spacing:.09em;color:rgba(237,233,225,.38);
-  margin-top:20px;padding-top:28px;
-  border-top:1px solid var(--rule);border-bottom:none;
-}
-.sl.final:hover{color:rgba(237,233,225,.7);border-bottom-color:transparent}
-
-/* ── BSS SCORE ── */
-#bss{
-  position:relative;z-index:2;
-  padding:120px 56px;
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:80px;align-items:center;
-  max-width:1200px;margin:0 auto;
-}
-
-.bss-left{}
-.bss-tag{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:28px;display:flex;align-items:center;gap:12px}
-.bss-tag::before{content:'';display:block;width:24px;height:1px;background:var(--muted)}
-.bss-num{
+/* -- SECTION HEADING -- */
+.sec-h{
   font-family:var(--serif);font-weight:300;
-  font-size:clamp(100px,14vw,200px);
-  line-height:.85;letter-spacing:-.03em;
-  color:var(--white);display:block;
+  font-size:clamp(36px,4.5vw,60px);line-height:1.05;letter-spacing:-.01em;
+  margin-bottom:20px;
 }
-.bss-tier{
-  display:inline-flex;align-items:center;gap:8px;
-  font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--gold);border:1px solid rgba(200,169,110,.25);
-  padding:5px 14px;margin-top:16px;
-}
-.bss-delta{font-family:var(--mono);font-size:13px;color:rgba(200,169,110,.85);margin-top:12px}
-.bss-caption{
-  font-family:var(--serif);font-size:16px;font-weight:300;
+.sec-sub{
+  font-family:var(--serif);font-size:17px;font-weight:300;
   line-height:1.75;color:rgba(237,233,225,.45);
-  max-width:360px;margin-top:28px;
+  max-width:640px;
 }
 
-/* BSS right — glass data panel */
-.bss-panel{
+/* -- PROBLEM SECTION -- */
+#problem{
+  position:relative;z-index:2;
+  padding:140px 56px;
+  text-align:center;
+}
+#problem .sec-tag{justify-content:center}
+#problem .sec-tag::before{display:none}
+#problem .sec-sub{margin:0 auto 64px}
+
+.stat-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:16px;max-width:960px;margin:0 auto 32px;
+}
+.stat-card{
   background:rgba(8,10,14,0.75);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border:1px solid rgba(200,169,110,0.1);
+  padding:40px 28px;
   position:relative;overflow:hidden;
-  padding:8px 28px;
-  box-shadow:inset 0 1px 0 rgba(200,169,110,0.06),0 0 60px rgba(0,0,0,0.3);
+  transition:background .3s,border-color .3s;
+  box-shadow:inset 0 1px 0 rgba(200,169,110,0.06),0 0 40px rgba(0,0,0,0.2);
 }
-.bss-panel::before{
+.stat-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(200,169,110,.25),transparent);
+  background:linear-gradient(90deg,transparent,rgba(200,169,110,.2),transparent);
 }
-.dp{
-  display:flex;align-items:baseline;justify-content:space-between;
-  padding:17px 0;border-bottom:1px solid var(--rule);
+.stat-card:hover{background:rgba(8,10,14,0.85);border-color:rgba(200,169,110,0.16)}
+.stat-num{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(36px,4vw,56px);line-height:1;
+  color:var(--gold);margin-bottom:12px;
 }
-.dp:last-child{border-bottom:none}
-.dp-k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.dp-v{font-family:var(--mono);font-size:14px;color:var(--white)}
-.dp-v.au{color:var(--gold)}
+.stat-label{
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);line-height:1.6;
+}
+.stat-source{
+  font-family:var(--mono);font-size:8px;letter-spacing:.1em;
+  color:rgba(122,118,109,0.5);
+  max-width:960px;margin:0 auto;
+}
 
-/* trend */
-.bss-trend{margin-top:28px}
-.bss-trend-label{display:flex;justify-content:space-between;margin-bottom:8px}
-.bss-trend-label span{font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.08em}
-#trendSvg{width:100%;height:52px;overflow:visible}
-.tp{fill:none;stroke:var(--gold);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:450;stroke-dashoffset:450;transition:stroke-dashoffset 2s cubic-bezier(.4,0,.2,1)}
-.tp.draw{stroke-dashoffset:0}
-.ta{fill:url(#tg);opacity:0;transition:opacity 1s .8s}
-.ta.show{opacity:1}
-.td{fill:var(--gold);opacity:0;transition:opacity .3s}
-.td.show{opacity:1}
-
-/* ── TIMELINE ── */
-#timeline{
+/* -- HOW IT WORKS -- */
+#how-it-works{
   position:relative;z-index:2;
-  padding:120px 56px;
+  padding:140px 56px;
   max-width:1200px;margin:0 auto;
 }
-.tl-head{
-  display:grid;grid-template-columns:1fr 1fr;gap:80px;
-  align-items:end;margin-bottom:72px;
-}
-.tl-tag{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:12px}
-.tl-tag::before{content:'';display:block;width:24px;height:1px;background:var(--muted)}
-.tl-h{
-  font-family:var(--serif);font-weight:300;
-  font-size:clamp(38px,4.5vw,60px);line-height:.95;letter-spacing:-.01em;
-}
-.tl-desc{font-family:var(--serif);font-size:17px;font-weight:300;line-height:1.75;color:rgba(237,233,225,.45);align-self:end}
 
-.tl-table{display:flex;flex-direction:column}
-.tl-row{
-  display:grid;grid-template-columns:64px 100px 1fr auto;
-  gap:20px;align-items:center;
-  padding:16px 0;border-bottom:1px solid var(--rule);
-  transition:background .2s;
+.steps-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:24px;margin-top:64px;
 }
-.tl-row:first-child{border-top:1px solid var(--rule)}
-.tl-row:hover{background:rgba(255,255,255,.02)}
-.tl-seq{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.1em}
-.tl-badge{
-  font-family:var(--mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;
-  padding:4px 10px;border:1px solid;display:inline-block;text-align:center;
-}
-.tb-start{border-color:rgba(255,255,255,.1);color:rgba(255,255,255,.35)}
-.tb-open{border-color:rgba(200,169,110,.2);color:rgba(200,169,110,.7)}
-.tb-viol{border-color:rgba(180,80,60,.4);color:rgba(200,100,80,.85)}
-.tl-txt{font-family:var(--mono);font-size:11px;color:rgba(237,233,225,.6)}
-.tl-txt strong{color:var(--white);font-weight:400}
-.tl-t{font-family:var(--mono);font-size:9px;color:var(--muted);text-align:right}
-
-/* ── SENTI SECTION ── */
-#senti{
-  position:relative;z-index:2;
-  padding:160px 56px;
-  text-align:center;
-}
-.senti-q{
-  font-family:var(--serif);font-weight:300;font-style:italic;
-  font-size:clamp(30px,4.5vw,58px);
-  line-height:1.25;letter-spacing:-.005em;
-  color:var(--white);margin-bottom:40px;
-  max-width:800px;margin-left:auto;margin-right:auto;
-}
-.senti-attr{
-  font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:80px;
-}
-.senti-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:12px;
-  max-width:900px;margin:0 auto;text-align:left;
-}
-.sc{
+.step{
   background:rgba(8,10,14,0.75);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border:1px solid rgba(200,169,110,0.08);
-  padding:36px;
+  padding:40px 32px;
+  position:relative;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(200,169,110,0.05),0 0 40px rgba(0,0,0,0.2);
+}
+.step::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,169,110,.15),transparent);
+}
+.step-num{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(64px,8vw,96px);line-height:1;
+  color:rgba(200,169,110,.08);margin-bottom:16px;
+}
+.step-title{
+  font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--white);margin-bottom:14px;
+}
+.step-desc{
+  font-family:var(--serif);font-size:16px;font-weight:300;
+  line-height:1.75;color:rgba(237,233,225,.5);
+}
+
+/* -- MULTI-FIRM COMPARISON -- */
+#comparison{
+  position:relative;z-index:2;
+  padding:140px 56px;
+}
+#comparison .sec-tag{justify-content:center}
+#comparison .sec-tag::before{display:none}
+#comparison .sec-sub{margin:0 auto 72px;text-align:center}
+.comparison-heading{text-align:center}
+
+.firm-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;max-width:1200px;margin:0 auto;
+}
+.firm-card{
+  background:rgba(8,10,14,0.8);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(200,169,110,0.12);
+  position:relative;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(200,169,110,0.06),0 0 60px rgba(0,0,0,0.3);
+}
+.firm-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(200,169,110,.3),transparent);
+}
+.firm-header{
+  padding:24px 28px 20px;
+  border-bottom:1px solid var(--rule);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.firm-name{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--white);
+}
+.firm-account{
+  font-family:var(--mono);font-size:9px;letter-spacing:.08em;
+  color:var(--muted);
+}
+
+/* Verdict badges */
+.verdict{
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  padding:5px 14px;font-weight:500;
+}
+.verdict-pass{
+  background:var(--pass-bg);
+  border:1px solid var(--pass-border);
+  color:var(--pass);
+}
+.verdict-fail{
+  background:var(--fail-bg);
+  border:1px solid var(--fail-border);
+  color:var(--fail);
+}
+
+.firm-rules{padding:0}
+.firm-rule{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 28px;
+  border-bottom:1px solid rgba(255,255,255,.03);
+  font-family:var(--mono);font-size:10px;
+  transition:background .2s;
+}
+.firm-rule:last-child{border-bottom:none}
+.firm-rule:hover{background:rgba(255,255,255,.02)}
+.rule-name{color:rgba(237,233,225,.6);letter-spacing:.04em}
+.rule-detail{
+  font-size:9px;letter-spacing:.04em;
+  display:block;color:rgba(237,233,225,.3);margin-top:3px;
+}
+.rule-status{flex-shrink:0;margin-left:16px}
+.rule-pass{color:var(--pass)}
+.rule-fail{color:var(--fail)}
+
+.firm-footer{
+  padding:16px 28px;
+  border-top:1px solid var(--rule);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.firm-verdict-label{
+  font-family:var(--mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* -- SUPPORTED FIRMS -- */
+#firms{
+  position:relative;z-index:2;
+  padding:140px 56px;
+  max-width:1200px;margin:0 auto;
+}
+.firms-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;margin-top:64px;
+}
+.firm-info-card{
+  background:rgba(8,10,14,0.75);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(200,169,110,0.1);
+  padding:36px 32px;
   position:relative;overflow:hidden;
   transition:background .3s,border-color .3s;
   box-shadow:inset 0 1px 0 rgba(200,169,110,0.05),0 0 40px rgba(0,0,0,0.2);
 }
-.sc::before{
+.firm-info-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,rgba(200,169,110,.15),transparent);
 }
-.sc:hover{background:rgba(8,10,14,0.82);border-color:rgba(200,169,110,0.14)}
-.sc-mode{
-  font-family:var(--mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:18px;
+.firm-info-card:hover{background:rgba(8,10,14,0.85);border-color:rgba(200,169,110,0.16)}
+.firm-info-name{
+  font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--white);margin-bottom:18px;
 }
-.sc-text{
-  font-family:var(--serif);font-size:16px;font-weight:300;
-  line-height:1.75;color:rgba(237,233,225,.65);font-style:italic;
+.firm-info-detail{
+  font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  color:var(--muted);line-height:2;
 }
-.sc-text strong{font-style:normal;font-weight:400;color:var(--white)}
 
-/* ── CREDENTIAL ── */
-#credential{
+/* -- WHAT YOU GET -- */
+#features{
   position:relative;z-index:2;
-  padding:120px 56px;
-  display:grid;grid-template-columns:1fr 1fr;gap:100px;
-  align-items:center;max-width:1200px;margin:0 auto;
+  padding:140px 56px;
+  max-width:960px;margin:0 auto;
 }
-.cr-tag{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:28px;display:flex;align-items:center;gap:12px}
-.cr-tag::before{content:'';display:block;width:24px;height:1px;background:var(--muted)}
-.cr-h{
-  font-family:var(--serif);font-weight:300;
-  font-size:clamp(32px,3.5vw,50px);line-height:1.1;letter-spacing:-.01em;
-  margin-bottom:24px;
+.feature-list{margin-top:56px}
+.feature-item{
+  display:flex;align-items:baseline;gap:18px;
+  padding:18px 0;border-bottom:1px solid var(--rule);
+  transition:background .2s;
 }
-.cr-body{font-family:var(--serif);font-size:16px;font-weight:300;line-height:1.8;color:rgba(237,233,225,.45);margin-bottom:36px}
-.cr-perks{display:flex;flex-direction:column}
-.cp{display:flex;gap:18px;padding:18px 0;border-bottom:1px solid var(--rule);align-items:flex-start}
-.cp:first-child{border-top:1px solid var(--rule)}
-.cp-n{font-family:var(--mono);font-size:9px;color:var(--muted);flex-shrink:0;margin-top:2px}
-.cp-t{font-family:var(--serif);font-size:15px;font-weight:300;color:rgba(237,233,225,.65);line-height:1.6}
-.cp-t strong{color:var(--white);font-weight:400}
+.feature-item:first-child{border-top:1px solid var(--rule)}
+.feature-item:hover{background:rgba(255,255,255,.02)}
+.feature-n{
+  font-family:var(--mono);font-size:9px;color:var(--muted);
+  flex-shrink:0;letter-spacing:.08em;min-width:22px;
+}
+.feature-text{
+  font-family:var(--serif);font-size:17px;font-weight:300;
+  line-height:1.6;color:rgba(237,233,225,.65);
+}
 
-/* ID Card — premium glass */
-.id-card{
-  background:rgba(8,10,14,0.8);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border:1px solid rgba(200,169,110,.15);
-  padding:40px;position:relative;overflow:hidden;
-  box-shadow:inset 0 1px 0 rgba(200,169,110,0.08),0 0 80px rgba(0,0,0,.3),0 24px 48px rgba(0,0,0,.4);
-}
-.id-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);
-}
-.id-card::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(200,169,110,.08),transparent);
-}
-.id-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--rule)}
-.id-brand-t{font-family:var(--mono);font-size:7px;letter-spacing:.4em;text-transform:uppercase;color:var(--muted);display:block}
-.id-brand-m{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--white);display:block}
-.id-cert{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border:1px solid rgba(200,169,110,.3);color:var(--gold)}
-.id-name{font-family:var(--serif);font-size:22px;font-weight:300;letter-spacing:.02em;color:var(--white);margin-bottom:4px}
-.id-handle{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.08em;margin-bottom:28px}
-.id-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.id-f{padding:13px 0;border-bottom:1px solid var(--rule)}
-.id-f:nth-child(odd){padding-right:20px}
-.id-fl{font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.id-fv{font-family:var(--mono);font-size:13px;color:var(--white)}
-.id-fv.g{color:var(--gold)}
-.id-foot{margin-top:18px;text-align:right;font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.08em}
-
-/* ── BETA ── */
-#beta{
+/* -- FINAL CTA -- */
+#cta{
   position:relative;z-index:2;
   padding:160px 56px;text-align:center;
 }
-.beta-glow{
+.cta-glow{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   width:600px;height:600px;border-radius:50%;
   background:radial-gradient(circle,rgba(200,169,110,.06) 0%,transparent 70%);
   pointer-events:none;
 }
-.beta-ghost{
-  font-family:var(--serif);font-weight:300;
-  font-size:clamp(100px,16vw,200px);line-height:1;
-  letter-spacing:-.04em;color:rgba(255,255,255,.04);
-  margin-bottom:-20px;position:relative;z-index:1;
-  user-select:none;
-}
-.beta-h{
+.cta-h{
   font-family:var(--serif);font-weight:300;
   font-size:clamp(40px,5.5vw,72px);line-height:.95;
   letter-spacing:-.01em;margin-bottom:24px;
   position:relative;z-index:2;
 }
-.beta-h em{font-style:italic;color:var(--gold)}
-.beta-sub{
+.cta-h em{font-style:italic;color:var(--gold)}
+.cta-sub{
   font-family:var(--serif);font-size:17px;font-weight:300;
   line-height:1.75;color:rgba(237,233,225,.45);
   margin-bottom:52px;max-width:520px;
   margin-left:auto;margin-right:auto;
 }
-.beta-sub strong{color:rgba(237,233,225,.8);font-weight:400}
-.beta-form{
-  display:flex;gap:0;max-width:420px;margin:0 auto 16px;
-  border:1px solid rgba(255,255,255,.12);
-}
-.beta-input{
-  flex:1;background:transparent;border:none;
-  padding:15px 18px;font-family:var(--mono);font-size:11px;
-  letter-spacing:.08em;color:var(--white);outline:none;
-}
-.beta-input::placeholder{color:var(--muted)}
-.beta-btn{
-  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  padding:15px 26px;background:var(--white);color:var(--bg);
-  border:none;cursor:pointer;transition:background .25s;white-space:nowrap;
-}
-.beta-btn:hover{background:var(--gold)}
-.beta-note{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--muted);margin-bottom:60px}
+.cta-sub strong{color:rgba(237,233,225,.8);font-weight:400}
 
-/* Board */
-.board{max-width:640px;margin:0 auto;position:relative;z-index:2}
-.board-top{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:20px;
-}
-.board-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-.board-live{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:rgba(200,169,110,.7)}
-.board-live-dot{width:5px;height:5px;border-radius:50%;background:rgba(200,169,110,.85);animation:pulse 2.4s ease-in-out infinite}
-
-.board-glass{
-  background:rgba(8,10,14,0.75);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(200,169,110,.12);
-  position:relative;overflow:hidden;
-  box-shadow:inset 0 1px 0 rgba(200,169,110,0.06),0 0 60px rgba(0,0,0,0.3);
-}
-.board-glass::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(200,169,110,.25),transparent);
-}
-
-.be{
-  display:flex;align-items:center;
-  padding:28px 36px;
-  border-bottom:1px solid rgba(255,255,255,.04);
-  transition:background .2s;
-  position:relative;
-}
-.be:last-of-type{border-bottom:none}
-.be:hover{background:rgba(255,255,255,.02)}
-.be.empty{opacity:.35}
-.be-first::after{
-  content:'';position:absolute;left:0;top:15%;bottom:15%;width:2px;
-  background:linear-gradient(to bottom,transparent,rgba(200,169,110,.5),transparent);
-}
-.be-rank{
-  font-family:var(--serif);font-size:56px;font-weight:300;line-height:1;
-  letter-spacing:-.02em;color:rgba(255,255,255,.07);
-  min-width:56px;flex-shrink:0;
-}
-.be-rank.r1{color:rgba(200,169,110,.18)}
-.be-mid{flex:1;padding:0 28px;display:flex;flex-direction:column;gap:6px}
-.be-handle{font-family:var(--mono);font-size:11px;letter-spacing:.07em;color:rgba(237,233,225,.7)}
-.be-handle.empty{font-size:10px;color:rgba(237,233,225,.22);letter-spacing:.12em;font-style:italic}
-.be-tier{font-family:var(--mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.be-tier.active{color:var(--gold);opacity:.85}
-.be-score{font-family:var(--serif);font-size:clamp(44px,5vw,68px);font-weight:300;line-height:1;letter-spacing:-.02em;color:var(--white)}
-.be-score.empty{font-family:var(--mono);font-size:18px;letter-spacing:.2em;color:rgba(255,255,255,.12)}
-.be-meta{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:5px;text-align:right}
-
-.board-foot{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 36px;background:rgba(200,169,110,.02);
-  border-top:1px solid rgba(255,255,255,.04);
-}
-.board-foot-txt{
-  font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
-  color:rgba(200,169,110,.4);display:flex;align-items:center;gap:8px;
-}
-.board-foot-cta{
-  font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
-  color:rgba(200,169,110,.55);text-decoration:none;
-  border-bottom:1px solid rgba(200,169,110,.2);padding-bottom:1px;
-  transition:all .25s;
-}
-.board-foot-cta:hover{color:var(--gold);border-color:var(--gold)}
-
-/* ── FOOTER ── */
+/* -- FOOTER -- */
 footer{
   position:relative;z-index:2;
   padding:36px 56px;
@@ -527,86 +441,48 @@ footer{
   border-top:1px solid var(--rule);
 }
 .foot-brand{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-.foot-tag{font-family:var(--serif);font-size:13px;font-style:italic;color:var(--muted)}
+.foot-links{display:flex;gap:24px}
+.foot-link{
+  font-family:var(--mono);font-size:9px;letter-spacing:.1em;
+  color:var(--muted);text-decoration:none;transition:color .3s;
+}
+.foot-link:hover{color:var(--white)}
 .foot-legal{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.08em}
 
-/* ── STATUS BAR ── */
-#sb{
-  position:fixed;top:0;left:0;right:0;z-index:600;
-  height:26px;background:rgba(8,10,14,.95);
-  border-bottom:1px solid rgba(200,169,110,.15);
-  overflow:hidden;display:flex;align-items:center;
-}
-.sb-track{
-  display:flex;align-items:center;gap:18px;white-space:nowrap;
-  animation:sbScroll 28s linear infinite;padding-left:100%;
-}
-.sb-item{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(200,169,110,.9)}
-.sb-live{color:rgba(200,169,110,.75)}
-.sb-sep{color:rgba(255,255,255,.08);font-family:var(--mono);font-size:8px}
-.sb-dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:rgba(200,169,110,.9);animation:pulse 2.4s ease-in-out infinite;vertical-align:middle;margin-right:2px}
-@keyframes sbScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* ── KEYFRAMES ── */
+/* -- KEYFRAMES -- */
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
-/* ── RESPONSIVE ── */
+/* -- RESPONSIVE -- */
 @media(max-width:960px){
   nav{padding:18px 28px}
   #hero{padding:110px 28px 80px}
-  #statement{padding:100px 28px}
-  #bss{grid-template-columns:1fr;gap:56px;padding:100px 28px}
-  #timeline{padding:100px 28px}
-  .tl-head{grid-template-columns:1fr;gap:24px}
-  #senti{padding:100px 28px}
-  .senti-grid{grid-template-columns:1fr}
-  #credential{grid-template-columns:1fr;gap:56px;padding:100px 28px}
-  #beta{padding:120px 28px}
+  #problem{padding:100px 28px}
+  .stat-grid{grid-template-columns:1fr}
+  #how-it-works{padding:100px 28px}
+  .steps-grid{grid-template-columns:1fr}
+  #comparison{padding:100px 28px}
+  .firm-grid{grid-template-columns:1fr}
+  #firms{padding:100px 28px}
+  .firms-grid{grid-template-columns:1fr}
+  #features{padding:100px 28px}
+  #cta{padding:120px 28px}
   footer{flex-direction:column;gap:16px;text-align:center;padding:28px}
-  .tl-row{grid-template-columns:auto 80px 1fr;gap:12px}
-  .tl-t{display:none}
 }
 @media(max-width:600px){
   .hero-actions{flex-direction:column;align-items:stretch;max-width:280px;margin:0 auto}
-  .beta-form{flex-direction:column;border:none;gap:8px}
-  .beta-input{border:1px solid rgba(255,255,255,.12)}
-  .senti-grid{grid-template-columns:1fr}
+  .nav-links{gap:12px}
+  .nav-cta{padding:8px 16px;font-size:9px}
 }
 </style>
 </head>
 <body>
 
-<!-- STATUS BAR -->
-<div id="sb">
-  <div class="sb-track">
-    <span class="sb-dot"></span>
-    <span class="sb-item sb-live">Engine Active</span>
-    <span class="sb-sep">·</span>
-    <span class="sb-item">BSS Computed</span>
-    <span class="sb-sep">·</span>
-    <span class="sb-item">Sessions Tracked&nbsp;152</span>
-    <span class="sb-sep">·</span>
-    <span class="sb-item">Behavioral Engine v1.0</span>
-    <span class="sb-sep">·</span>
-    <span class="sb-item sb-live">Engine Active</span>
-    <span class="sb-sep">·</span>
-    <span class="sb-item">BSS Computed</span>
-    <span class="sb-sep">·</span>
-    <span class="sb-item">Sessions Tracked&nbsp;152</span>
-    <span class="sb-sep">·</span>
-    <span class="sb-item">Behavioral Engine v1.0</span>
-    <span class="sb-sep">·</span>
-  </div>
-</div>
-
 <!-- NEBULA -->
 <canvas id="nebula"></canvas>
 
-
 <!-- NAV -->
-<nav id="nav" style="top:26px">
+<nav id="nav">
   <a href="#" class="nav-logo">
-    <!-- Eye logo matching actual app -->
     <div class="nav-eye-wrap" id="eyeWrap">
       <svg width="38" height="26" viewBox="0 0 38 26" fill="none" overflow="visible">
         <defs>
@@ -621,11 +497,8 @@ footer{
           <clipPath id="ec"><path d="M0,13 C0,13 7,3 19,3 C31,3 38,13 38,13 C38,13 31,23 19,23 C7,23 0,13 0,13 Z"/></clipPath>
           <clipPath id="ic"><circle cx="19" cy="13" r="7"/></clipPath>
         </defs>
-        <!-- Orbit ring -->
         <circle cx="19" cy="13" r="17" fill="none" stroke="rgba(200,169,110,0.1)" stroke-width="0.5" stroke-dasharray="2 7"/>
-        <!-- Almond -->
         <path d="M0,13 C0,13 7,3 19,3 C31,3 38,13 38,13 C38,13 31,23 19,23 C7,23 0,13 0,13 Z" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1" filter="url(#eg)"/>
-        <!-- Interior -->
         <g clip-path="url(#ec)">
           <circle cx="19" cy="13" r="9" fill="rgba(200,169,110,0.04)"/>
           <circle cx="19" cy="13" r="7" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="0.7"/>
@@ -635,14 +508,11 @@ footer{
             <circle cx="19" cy="13" r="1.5" fill="#c8a96e" filter="url(#egs)"/>
             <circle cx="17.8" cy="11.8" r="0.6" fill="white" opacity="0.6"/>
           </g>
-          <!-- Lids -->
           <path id="uL" d="M0,13 C0,13 7,3 19,3 C31,3 38,13 38,13 L38,3 C31,1 7,1 0,3 Z" fill="#080a0e" opacity="0"/>
           <path id="lL" d="M0,13 C0,13 7,23 19,23 C31,23 38,13 38,13 L38,23 C31,25 7,25 0,23 Z" fill="#080a0e" opacity="0"/>
         </g>
-        <!-- H ticks -->
         <line x1="-4" y1="13" x2="0" y2="13" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" filter="url(#eg)"/>
         <line x1="38" y1="13" x2="42" y2="13" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" filter="url(#eg)"/>
-        <!-- Reticles -->
         <line x1="30" y1="6.5" x2="32.5" y2="4" stroke="rgba(200,169,110,0.45)" stroke-width="0.75"/>
         <line x1="8" y1="6.5" x2="5.5" y2="4" stroke="rgba(200,169,110,0.45)" stroke-width="0.75"/>
         <line x1="30" y1="19.5" x2="32.5" y2="22" stroke="rgba(200,169,110,0.45)" stroke-width="0.75"/>
@@ -652,29 +522,29 @@ footer{
     <div class="nav-word">
       <span class="nav-d">Drift</span>
       <span class="nav-s">Sentinel</span>
-      
     </div>
   </a>
-  <a href="https://app.driftsentinel.io" class="nav-cta">Enter Beta</a>
+  <div class="nav-links">
+    <a href="https://app.driftsentinel.io/login" class="nav-link">Sign In</a>
+    <a href="https://app.driftsentinel.io/signup" class="nav-cta">Get Started</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-badge">
     <span class="hero-badge-dot"></span>
-    Behavioral Intelligence · Est. 2026
+    Pre-Purchase Compliance Scoring
   </div>
   <h1 class="hero-h1">
-    PnL doesn't tell<br>the <em>full story.</em>
+    Score your trades<br>against any prop firm.<br><em>Before you pay.</em>
   </h1>
   <p class="hero-h2">
-    Your Behavioral Stability Score does.<br>
-    <strong>The discipline metric your trading history has always been trying to compute.</strong>
+    Upload your history. Pick your firm. Know if you'd pass &mdash; before spending $200&ndash;600 on an evaluation.
   </p>
-  <p class="hero-sub">Discipline is edge.</p>
   <div class="hero-actions">
-    <a href="https://app.driftsentinel.io" class="btn-main">Join the Beta</a>
-    <a href="#timeline" class="btn-ghost">See how it works</a>
+    <a href="https://app.driftsentinel.io/signup" class="btn-main">Score My Trades</a>
+    <a href="#how-it-works" class="btn-ghost">See How It Works</a>
   </div>
   <div class="hero-scroll">
     <span class="hero-scroll-lbl">Scroll</span>
@@ -684,250 +554,324 @@ footer{
 
 <div class="rule"></div>
 
-<!-- STATEMENT -->
-<section id="statement">
-  <div class="stmt-inner">
-    <div class="stmt-label">The problem · For traders who know the strategy works</div>
-    <div class="stmt-lines">
-      <div class="sl"><span class="sl-n">01</span>The strategy works.</div>
-      <div class="sl"><span class="sl-n">02</span>You don't follow it under pressure.</div>
-      <div class="sl accent"><span class="sl-n">03</span><em>The behavior is the problem.</em></div>
-      <div class="sl"><span class="sl-n">04</span>Drift Sentinel scores the behavior.</div>
-      <div class="sl final"><span class="sl-n">&nbsp;</span>Without sentiment. Without excuses. Without forgetting.</div>
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="sec-tag">The Problem</div>
+  <h2 class="sec-h">80% of traders fail evaluations</h2>
+  <p class="sec-sub">Not because their strategies are bad &mdash; because they violate rules they didn't check in advance.</p>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-num">$2&ndash;5B</div>
+      <div class="stat-label">Spent on evaluations annually</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">80%</div>
+      <div class="stat-label">Fail from rule violations,<br>not bad strategies</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">$800&ndash;4,270</div>
+      <div class="stat-label">Average cost before<br>first payout</div>
+    </div>
+  </div>
+  <p class="stat-source">Data from PropIQ, FX Empire, QuantVPS research</p>
+</section>
+
+<div class="rule"></div>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="sec-tag">How It Works</div>
+  <h2 class="sec-h">Three steps. Under two minutes.</h2>
+
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-title">Upload Your Trades</div>
+      <div class="step-desc">Export your Tradovate Performance CSV. Drag and drop.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-title">Pick Your Firm</div>
+      <div class="step-desc">Choose from TPT, FTMO, Apex Trader Funding. Any account size.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-title">Get Your Score</div>
+      <div class="step-desc">PASS or FAIL on every rule. See exactly where you'd fail &mdash; before you pay.</div>
     </div>
   </div>
 </section>
 
 <div class="rule"></div>
 
-<!-- BSS SCORE -->
-<section id="bss">
-  <div class="bss-left">
-    <div class="bss-tag">Behavioral Stability Score</div>
-    <span class="bss-num" id="scoreNum">0</span>
-    <div class="bss-tier">● Disciplined</div>
-    <div class="bss-delta">▲ +12 this week</div>
-    <p class="bss-caption">
-      Computed from what you actually did.
-      Not what you told yourself. Not what you posted.
-      What the fills show — every session, every trade, every rule you set.
-    </p>
-    <div class="bss-trend">
-      <div class="bss-trend-label">
-        <span>Mar 10</span><span>Mar 11</span><span>Mar 13</span><span>Mar 15</span><span>Mar 17</span>
-      </div>
-      <svg id="trendSvg" viewBox="0 0 400 52" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#c8a96e" stop-opacity="0.18"/>
-            <stop offset="100%" stop-color="#c8a96e" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <path class="ta" id="trendA" d="M0,44 C50,44 70,28 100,18 C130,8 160,4 200,3 C240,2 270,5 310,7 C350,9 375,14 400,17 L400,52 L0,52 Z"/>
-        <path class="tp" id="trendP" d="M0,44 C50,44 70,28 100,18 C130,8 160,4 200,3 C240,2 270,5 310,7 C350,9 375,14 400,17"/>
-        <circle class="td" cx="0" cy="44" r="2.5"/>
-        <circle class="td" cx="100" cy="18" r="2.5"/>
-        <circle class="td" cx="200" cy="3" r="2.5"/>
-        <circle class="td" cx="310" cy="7" r="2.5"/>
-        <circle class="td" cx="400" cy="17" r="2.5"/>
-      </svg>
-    </div>
+<!-- MULTI-FIRM COMPARISON -->
+<section id="comparison">
+  <div class="comparison-heading">
+    <div class="sec-tag">The Conversion Moment</div>
+    <h2 class="sec-h" style="text-align:center">Same trades. Different verdicts.</h2>
+    <p class="sec-sub" style="text-align:center">Your strategy might pass one firm and fail another. See which one fits.</p>
   </div>
-  <div class="bss-panel">
-    <div class="dp"><span class="dp-k">Sessions tracked</span><span class="dp-v">8</span></div>
-    <div class="dp"><span class="dp-k">Clean session rate</span><span class="dp-v">88%</span></div>
-    <div class="dp"><span class="dp-k">Violations detected</span><span class="dp-v">2</span></div>
-    <div class="dp"><span class="dp-k">Max consecutive losses</span><span class="dp-v">2</span></div>
-    <div class="dp"><span class="dp-k">Protocol adherence</span><span class="dp-v">72%</span></div>
-    <div class="dp"><span class="dp-k">Alpha vs cohort</span><span class="dp-v au">+0.4</span></div>
-    <div class="dp"><span class="dp-k">Current tier</span><span class="dp-v au">Disciplined</span></div>
-  </div>
-</section>
 
-<div class="rule"></div>
+  <div class="firm-grid">
 
-<!-- TIMELINE -->
-<section id="timeline">
-  <div class="tl-head">
-    <div>
-      <div class="tl-tag">Session forensics</div>
-      <h2 class="tl-h">Every session.<br>Every event.<br>Every pattern.</h2>
-    </div>
-    <p class="tl-desc">
-      The behavioral black box opens on every session.
-      The exact sequence that led to a breakdown —
-      visible, timestamped, undeniable. Not a summary. A record.
-    </p>
-  </div>
-  <div class="tl-table">
-    <div class="tl-row"><span class="tl-seq">#001</span><span class="tl-badge tb-start">Session Start</span><span class="tl-txt">2026-03-16 · 9h 34m duration</span><span class="tl-t">+0s</span></div>
-    <div class="tl-row"><span class="tl-seq">#002</span><span class="tl-badge tb-open">Trade Open</span><span class="tl-txt"><strong>BUY 9× MESH6</strong> @ 6715.5</span><span class="tl-t">+42s</span></div>
-    <div class="tl-row"><span class="tl-seq">#003</span><span class="tl-badge tb-viol">Violation</span><span class="tl-txt"><strong>FREQUENCY</strong> — CRITICAL · −30 pts</span><span class="tl-t">+1m 04s</span></div>
-    <div class="tl-row"><span class="tl-seq">#004</span><span class="tl-badge tb-open">Trade Open</span><span class="tl-txt"><strong>BUY 9× MESH6</strong> @ 6711.25 · 41s after $405 loss</span><span class="tl-t">+1m 45s</span></div>
-    <div class="tl-row"><span class="tl-seq">#005</span><span class="tl-badge tb-open">Trade Open</span><span class="tl-txt"><strong>SELL 9× MESH6</strong> @ 6707.75</span><span class="tl-t">+2m 18s</span></div>
-    <div class="tl-row"><span class="tl-seq">#006</span><span class="tl-badge tb-viol">Violation</span><span class="tl-txt"><strong>SIZE ESCALATION</strong> — HIGH · −20 pts</span><span class="tl-t">+3m 01s</span></div>
-  </div>
-</section>
-
-<div class="rule"></div>
-
-<!-- SENTI -->
-<section id="senti">
-  <p class="senti-q">
-    "Who suffers the most if you continue<br>to trade against your own rules?"
-  </p>
-  <p class="senti-attr">— Senti · Behavioral AI</p>
-  <div class="senti-grid">
-    <div class="sc">
-      <div class="sc-mode">Post-session · After Action Review</div>
-      <p class="sc-text">"You took 32 trades today — more than <strong>40% of your month in a single session.</strong> After that $405 loss, you re-entered within 41 seconds. What were you expecting to happen the second time?"</p>
-    </div>
-    <div class="sc">
-      <div class="sc-mode">Morning Briefing · Pre-session</div>
-      <p class="sc-text">"Position sizing is your mood indicator. Average is 4 contracts. <strong>You jump to 9 when confident — and when frustrated.</strong> Same action. The data can't tell the difference. Can you?"</p>
-    </div>
-    <div class="sc" style="grid-column:1/-1">
-      <div class="sc-mode">Session Companion · Live</div>
-      <p class="sc-text">"You're up $800 but your position size just doubled. <strong>The last 4 times that happened, the next trade was a loss.</strong> Just flagging it."</p>
-    </div>
-  </div>
-</section>
-
-<div class="rule"></div>
-
-<!-- CREDENTIAL -->
-<section id="credential">
-  <div>
-    <div class="cr-tag">DS Trader ID</div>
-    <h2 class="cr-h">Your behavioral profile. Built from real trades, not claims.</h2>
-    <p class="cr-body">A living record of how you actually trade. Your BSS, session history, and discipline patterns — all in one place. Not a screenshot. Not a 10-day challenge window. Real data, real accountability.</p>
-    <div class="cr-perks">
-      <div class="cp"><span class="cp-n">01</span><p class="cp-t"><strong>Built over time.</strong> Your profile reflects every session. Consistency compounds. Drift shows.</p></div>
-      <div class="cp"><span class="cp-n">02</span><p class="cp-t"><strong>Proof you can point to.</strong> When someone asks how you trade, you have an answer backed by data — not just words.</p></div>
-      <div class="cp"><span class="cp-n">03</span><p class="cp-t"><strong>Earned, not bought.</strong> BSS cannot be purchased or faked. It can only be built through disciplined execution.</p></div>
-    </div>
-  </div>
-  <div class="id-card">
-    <div class="id-hdr">
-      <div><span class="id-brand-t">Drift</span><span class="id-brand-m">Sentinel</span></div>
-      <span class="id-cert">Operator Certified</span>
-    </div>
-    <div class="id-name">John Doe</div>
-    <div class="id-handle">ds://trader-id-WEB-</div>
-    <div class="id-grid">
-      <div class="id-f"><div class="id-fl">BSS Score</div><div class="id-fv g">65 / 100</div></div>
-      <div class="id-f"><div class="id-fl">Tier</div><div class="id-fv">Disciplined</div></div>
-      <div class="id-f"><div class="id-fl">Sessions</div><div class="id-fv">8</div></div>
-      <div class="id-f"><div class="id-fl">Clean Rate</div><div class="id-fv">88%</div></div>
-      <div class="id-f"><div class="id-fl">Win Rate</div><div class="id-fv">52.6%</div></div>
-      <div class="id-f"><div class="id-fl">Alpha</div><div class="id-fv g">+0.4</div></div>
-    </div>
-    <div class="id-foot">Issued by Drift Sentinel · March 2026</div>
-  </div>
-</section>
-
-<div class="rule"></div>
-
-<!-- BETA -->
-<section id="beta">
-  <div class="beta-glow"></div>
-  <div class="beta-ghost">30</div>
-  <h2 class="beta-h">Beta is <em>live.</em></h2>
-  <p class="beta-sub">The first cohort is trading. Real data. Real scores. Spots are limited — the leaderboard closes at <strong>30 traders</strong>. The goal: reach <strong>Disciplined tier — BSS 75 or above</strong>.</p>
-  <div style="margin:0 auto 16px;text-align:center">
-    <a href="https://app.driftsentinel.io" class="btn-main" style="display:inline-block;font-size:12px;padding:18px 48px">Enter the Beta</a>
-  </div>
-  <p class="beta-note">No credit card. Brutal feedback welcome.</p>
-
-  <div class="board">
-    <div class="board-top">
-      <span class="board-lbl">First Cohort · March 2026</span>
-      <span class="board-live"><span class="board-live-dot"></span>Live</span>
-    </div>
-    <div class="board-glass">
-      <div class="be be-first">
-        <span class="be-rank r1">01</span>
-        <div class="be-mid">
-          <span class="be-handle">ds://trader-001</span>
-          <span class="be-tier active">Disciplined · 8 sessions</span>
+    <!-- TPT $50K -->
+    <div class="firm-card">
+      <div class="firm-header">
+        <div>
+          <div class="firm-name">TPT</div>
+          <div class="firm-account">$50K Evaluation</div>
         </div>
-        <div style="text-align:right">
-          <span class="be-score" id="lbScore">0</span>
-          <div class="be-meta">88% clean · +0.4 alpha</div>
+        <span class="verdict verdict-pass">Pass</span>
+      </div>
+      <div class="firm-rules">
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">EOD Trailing Drawdown ($2,000)</span>
+          </div>
+          <span class="rule-status rule-pass">PASS</span>
+        </div>
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">Max Position Size (60 micros)</span>
+          </div>
+          <span class="rule-status rule-pass">PASS</span>
+        </div>
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">Profit Target $3,000</span>
+            <span class="rule-detail">$1,271 of $3,000</span>
+          </div>
+          <span class="rule-status rule-fail">FAIL</span>
+        </div>
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">Min 5 Trading Days</span>
+            <span class="rule-detail">10 days</span>
+          </div>
+          <span class="rule-status rule-pass">PASS</span>
+        </div>
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">Consistency 50%</span>
+          </div>
+          <span class="rule-status rule-pass">PASS</span>
         </div>
       </div>
-      <div class="be empty">
-        <span class="be-rank">02</span>
-        <div class="be-mid">
-          <span class="be-handle empty">Upload your first session</span>
-          <span class="be-tier">Position open</span>
-        </div>
-        <div><span class="be-score empty">—</span></div>
+      <div class="firm-footer">
+        <span class="firm-verdict-label">Verdict</span>
+        <span class="verdict verdict-pass">Pass</span>
       </div>
-      <div class="be empty">
-        <span class="be-rank">03</span>
-        <div class="be-mid">
-          <span class="be-handle empty">Upload your first session</span>
-          <span class="be-tier">Position open</span>
+    </div>
+
+    <!-- FTMO $50K -->
+    <div class="firm-card">
+      <div class="firm-header">
+        <div>
+          <div class="firm-name">FTMO</div>
+          <div class="firm-account">$50K Phase 1</div>
         </div>
-        <div><span class="be-score empty">—</span></div>
+        <span class="verdict verdict-fail">Fail</span>
       </div>
-      <div class="board-foot">
-        <span class="board-foot-txt"><span class="board-live-dot"></span>Cohort open · score appears on first upload</span>
-        <a href="https://app.driftsentinel.io" class="board-foot-cta">Claim your position →</a>
+      <div class="firm-rules">
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">Static Drawdown (10%)</span>
+          </div>
+          <span class="rule-status rule-pass">PASS</span>
+        </div>
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">Daily Loss Limit ($2,500)</span>
+          </div>
+          <span class="rule-status rule-pass">PASS</span>
+        </div>
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">Profit Target $5,000 (10%)</span>
+            <span class="rule-detail">$1,271 of $5,000</span>
+          </div>
+          <span class="rule-status rule-fail">FAIL</span>
+        </div>
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">Min 4 Trading Days</span>
+            <span class="rule-detail">10 days</span>
+          </div>
+          <span class="rule-status rule-pass">PASS</span>
+        </div>
+      </div>
+      <div class="firm-footer">
+        <span class="firm-verdict-label">Verdict</span>
+        <span class="verdict verdict-fail">Fail</span>
+      </div>
+    </div>
+
+    <!-- Apex $50K -->
+    <div class="firm-card">
+      <div class="firm-header">
+        <div>
+          <div class="firm-name">Apex</div>
+          <div class="firm-account">$50K EOD</div>
+        </div>
+        <span class="verdict verdict-fail">Fail</span>
+      </div>
+      <div class="firm-rules">
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">EOD Trailing Drawdown ($2,500)</span>
+          </div>
+          <span class="rule-status rule-pass">PASS</span>
+        </div>
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">Max Position Size (6 contracts)</span>
+            <span class="rule-detail">53 violations</span>
+          </div>
+          <span class="rule-status rule-fail">FAIL</span>
+        </div>
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">Profit Target $3,000</span>
+          </div>
+          <span class="rule-status rule-fail">FAIL</span>
+        </div>
+        <div class="firm-rule">
+          <div>
+            <span class="rule-name">Time Limit (30 days)</span>
+            <span class="rule-detail">25 days</span>
+          </div>
+          <span class="rule-status rule-pass">PASS</span>
+        </div>
+      </div>
+      <div class="firm-footer">
+        <span class="firm-verdict-label">Verdict</span>
+        <span class="verdict verdict-fail">Fail</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- SUPPORTED FIRMS -->
+<section id="firms">
+  <div class="sec-tag">Supported Firms</div>
+  <h2 class="sec-h">23 rulesets. Every account size. Verified rules.</h2>
+
+  <div class="firms-grid">
+    <div class="firm-info-card">
+      <div class="firm-info-name">TPT</div>
+      <div class="firm-info-detail">
+        5 account sizes<br>
+        $25K &mdash; $150K<br>
+        EOD Trailing Drawdown
+      </div>
+    </div>
+    <div class="firm-info-card">
+      <div class="firm-info-name">FTMO</div>
+      <div class="firm-info-detail">
+        10 rulesets<br>
+        $10K &mdash; $200K<br>
+        Phase 1 + Phase 2<br>
+        Static Drawdown
+      </div>
+    </div>
+    <div class="firm-info-card">
+      <div class="firm-info-name">Apex Trader Funding</div>
+      <div class="firm-info-detail">
+        8 rulesets<br>
+        $25K &mdash; $150K<br>
+        EOD + Intraday<br>
+        Rithmic + Tradovate
       </div>
     </div>
   </div>
 </section>
 
+<div class="rule"></div>
+
+<!-- WHAT YOU GET -->
+<section id="features">
+  <div class="sec-tag">What You Get</div>
+  <h2 class="sec-h">Every rule checked. Every violation shown.</h2>
+
+  <div class="feature-list">
+    <div class="feature-item"><span class="feature-n">01</span><span class="feature-text">Trailing, static, and EOD drawdown evaluation</span></div>
+    <div class="feature-item"><span class="feature-n">02</span><span class="feature-text">Daily loss limit tracking (includes floating P&amp;L)</span></div>
+    <div class="feature-item"><span class="feature-n">03</span><span class="feature-text">Position size validation (mini + micro aggregate counting)</span></div>
+    <div class="feature-item"><span class="feature-n">04</span><span class="feature-text">Profit target progress</span></div>
+    <div class="feature-item"><span class="feature-n">05</span><span class="feature-text">Trading day requirements</span></div>
+    <div class="feature-item"><span class="feature-n">06</span><span class="feature-text">Consistency rule analysis</span></div>
+    <div class="feature-item"><span class="feature-n">07</span><span class="feature-text">Session window compliance</span></div>
+    <div class="feature-item"><span class="feature-n">08</span><span class="feature-text">Time limit tracking</span></div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- FINAL CTA -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <h2 class="cta-h">Stop paying <em>to find out.</em></h2>
+  <p class="cta-sub">Score your first trade history. <strong>Free.</strong></p>
+  <a href="https://app.driftsentinel.io/signup" class="btn-main" style="font-size:12px;padding:18px 48px">Get Started</a>
+</section>
+
+<!-- FOOTER -->
 <footer>
   <span class="foot-brand">Drift Sentinel</span>
-  <span class="foot-tag">Discipline is edge.</span>
-  <span class="foot-legal">© 2026 Drift Sentinel</span>
+  <div class="foot-links">
+    <a href="https://app.driftsentinel.io" class="foot-link">App</a>
+    <a href="#" class="foot-link">Privacy</a>
+    <a href="#" class="foot-link">Terms</a>
+  </div>
+  <span class="foot-legal">&copy; 2026 Drift Sentinel</span>
 </footer>
 
 <script>
-// ── GOLD NEBULA (WebGL) ──────────────────────────────────────────────────
+// -- GOLD NEBULA (WebGL) --
 (function(){
   var c=document.getElementById('nebula');
   if(!c)return;
   var gl=c.getContext('webgl');
   if(!gl)return;
 
-  var vs=`attribute vec2 p;varying vec2 vUv;void main(){vUv=p*.5+.5;gl_Position=vec4(p,0,1);}`;
-  var fs=`precision highp float;
-varying vec2 vUv;
-uniform vec2 u_res;
-uniform float u_time;
-uniform vec2 u_mouse;
-
-vec3 hsl2rgb(vec3 c){
-  vec3 rgb=clamp(abs(mod(c.x*6.0+vec3(0,4,2),6.0)-3.0)-1.0,0.0,1.0);
-  return c.z*mix(vec3(1),rgb,c.y);
-}
-float hash(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
-float noise(vec2 p){
-  vec2 i=floor(p),f=fract(p);
-  float a=hash(i),b=hash(i+vec2(1,0)),c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1));
-  vec2 u=f*f*(3.0-2.0*f);
-  return mix(a,b,u.x)+(c-a)*u.y*(1.0-u.x)+(d-b)*u.y*u.x;
-}
-float fbm(vec2 p){float v=0.0,a=0.5;for(int i=0;i<6;i++){v+=a*noise(p);p*=2.0;a*=0.5;}return v;}
-
-void main(){
-  vec2 uv=(gl_FragCoord.xy-0.5*u_res)/min(u_res.y,u_res.x)*1.4;
-  vec2 mn=u_mouse/u_res;
-  uv+=(mn-0.5)*0.8;
-  float f=fbm(uv+vec2(u_time*0.1,u_time*0.05));
-  float t=fbm(uv+f+vec2(u_time*0.05,u_time*0.02));
-  float neb=pow(t,2.0);
-  vec3 col=hsl2rgb(vec3(40.0/360.0+neb*0.15,0.7,0.5))*neb*2.2;
-  float sv=hash(vUv*500.0);
-  if(sv>0.998){float b=(sv-0.998)/0.002;col+=mix(vec3(1,.95,.85),vec3(1),b)*b*3.0;}
-  float sv2=hash(vUv*850.0+vec2(42,17));
-  if(sv2>0.997){float b2=(sv2-0.997)/0.003;col+=vec3(.9,.88,.82)*b2*0.4;}
-  gl_FragColor=vec4(col,1);
-}`;
+  var vs='attribute vec2 p;varying vec2 vUv;void main(){vUv=p*.5+.5;gl_Position=vec4(p,0,1);}';
+  var fs='precision highp float;\n'+
+'varying vec2 vUv;\n'+
+'uniform vec2 u_res;\n'+
+'uniform float u_time;\n'+
+'uniform vec2 u_mouse;\n'+
+'\n'+
+'vec3 hsl2rgb(vec3 c){\n'+
+'  vec3 rgb=clamp(abs(mod(c.x*6.0+vec3(0,4,2),6.0)-3.0)-1.0,0.0,1.0);\n'+
+'  return c.z*mix(vec3(1),rgb,c.y);\n'+
+'}\n'+
+'float hash(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}\n'+
+'float noise(vec2 p){\n'+
+'  vec2 i=floor(p),f=fract(p);\n'+
+'  float a=hash(i),b=hash(i+vec2(1,0)),c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1));\n'+
+'  vec2 u=f*f*(3.0-2.0*f);\n'+
+'  return mix(a,b,u.x)+(c-a)*u.y*(1.0-u.x)+(d-b)*u.y*u.x;\n'+
+'}\n'+
+'float fbm(vec2 p){float v=0.0,a=0.5;for(int i=0;i<6;i++){v+=a*noise(p);p*=2.0;a*=0.5;}return v;}\n'+
+'\n'+
+'void main(){\n'+
+'  vec2 uv=(gl_FragCoord.xy-0.5*u_res)/min(u_res.y,u_res.x)*1.4;\n'+
+'  vec2 mn=u_mouse/u_res;\n'+
+'  uv+=(mn-0.5)*0.8;\n'+
+'  float f=fbm(uv+vec2(u_time*0.1,u_time*0.05));\n'+
+'  float t=fbm(uv+f+vec2(u_time*0.05,u_time*0.02));\n'+
+'  float neb=pow(t,2.0);\n'+
+'  vec3 col=hsl2rgb(vec3(40.0/360.0+neb*0.15,0.7,0.5))*neb*2.2;\n'+
+'  float sv=hash(vUv*500.0);\n'+
+'  if(sv>0.998){float b=(sv-0.998)/0.002;col+=mix(vec3(1,.95,.85),vec3(1),b)*b*3.0;}\n'+
+'  float sv2=hash(vUv*850.0+vec2(42,17));\n'+
+'  if(sv2>0.997){float b2=(sv2-0.997)/0.003;col+=vec3(.9,.88,.82)*b2*0.4;}\n'+
+'  gl_FragColor=vec4(col,1);\n'+
+'}';
 
   function mkS(t,s){var sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh;}
   var pg=gl.createProgram();
@@ -970,7 +914,7 @@ void main(){
   requestAnimationFrame(draw);
 })();
 
-// ── EYE TRACKING ──────────────────────────────────────────────────────────
+// -- EYE TRACKING --
 (function(){
   var wrap=document.getElementById('eyeWrap');
   var pupil=document.getElementById('eyePupil');
@@ -1015,44 +959,31 @@ void main(){
   sched();
 })();
 
-// ── NAV SCROLL ────────────────────────────────────────────────────────────
+// -- NAV SCROLL --
 window.addEventListener('scroll',function(){
   var nav=document.getElementById('nav');
   if(nav)nav.style.background=window.scrollY>40?'rgba(8,10,14,0.92)':'linear-gradient(to bottom,rgba(8,10,14,0.9) 0%,transparent 100%)';
 },{passive:true});
 
-// ── SCORE COUNTERS ────────────────────────────────────────────────────────
-function countTo(el,target,dur){
-  if(!el)return;
-  var t0=null;
-  new IntersectionObserver(function(e,obs){
-    if(!e[0].isIntersecting)return;
-    obs.disconnect();
-    requestAnimationFrame(function tick(ts){
-      if(!t0)t0=ts;
-      var p=Math.min((ts-t0)/dur,1);
-      var ease=p===1?1:1-Math.pow(2,-10*p);
-      el.textContent=Math.round(ease*target);
-      if(p<1)requestAnimationFrame(tick);
-    });
-  },{threshold:0.3}).observe(el);
-}
-countTo(document.getElementById('scoreNum'),65,1600);
-countTo(document.getElementById('lbScore'),65,1800);
-
-// ── TREND LINE ────────────────────────────────────────────────────────────
+// -- FADE-UP ON SCROLL --
 (function(){
-  var p=document.getElementById('trendP');
-  var a=document.getElementById('trendA');
-  var dots=document.querySelectorAll('.td');
-  if(!p)return;
-  new IntersectionObserver(function(e,obs){
-    if(!e[0].isIntersecting)return;
-    obs.disconnect();
-    p.classList.add('draw');
-    if(a)a.classList.add('show');
-    setTimeout(function(){dots.forEach(function(d){d.classList.add('show');});},900);
-  },{threshold:0.2}).observe(p);
+  var els=document.querySelectorAll('.stat-card,.step,.firm-card,.firm-info-card,.feature-item');
+  if(!els.length)return;
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.style.opacity='1';
+        e.target.style.transform='none';
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.15});
+  els.forEach(function(el){
+    el.style.opacity='0';
+    el.style.transform='translateY(18px)';
+    el.style.transition='opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1)';
+    obs.observe(el);
+  });
 })();
 
 </script>
