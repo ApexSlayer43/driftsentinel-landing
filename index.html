@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Drift Sentinel — Pre-Purchase Prop Firm Compliance Scoring</title>
+<title>Drift Sentinel — Check If You'd Pass Any Prop Firm Evaluation | TPT, FTMO, Apex</title>
 <meta name="description" content="Score your trades against any prop firm's ruleset before you pay for an evaluation. Upload your history. Pick your firm. Know if you'd pass.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -299,7 +299,12 @@ nav{
 }
 .firm-name{
   font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--white);
+  color:var(--white);margin:0;font-weight:500;
+}
+.firm-verified{
+  font-family:var(--mono);font-size:8px;letter-spacing:.08em;
+  color:rgba(122,118,109,0.5);padding:10px 28px;text-align:center;
+  border-top:1px solid var(--rule);
 }
 .firm-account{
   font-family:var(--mono);font-size:9px;letter-spacing:.08em;
@@ -540,12 +545,14 @@ footer{
     Score your trades<br>against any prop firm.<br><em>Before you pay.</em>
   </h1>
   <p class="hero-h2">
-    Upload your history. Pick your firm. Know if you'd pass &mdash; before spending $200&ndash;600 on an evaluation.
+    It's not your strategy. It's the match between your strategy and the firm's rules. Upload your history &mdash; find out which firm you're already passing.
   </p>
   <div class="hero-actions">
     <a href="https://app.driftsentinel.io/signup" class="btn-main">Score My Trades</a>
     <a href="#how-it-works" class="btn-ghost">See How It Works</a>
   </div>
+  <p style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);margin-top:16px;opacity:0;animation:fadeUp .6s .8s forwards">No credit card required. Your first score is free.</p>
+  <p style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:rgba(122,118,109,0.6);margin-top:20px;opacity:0;animation:fadeUp .5s 1s forwards">Drift happens trade by trade. Sentinel catches it before it costs you.</p>
   <div class="hero-scroll">
     <span class="hero-scroll-lbl">Scroll</span>
     <div class="hero-scroll-line"></div>
@@ -557,13 +564,13 @@ footer{
 <!-- PROBLEM -->
 <section id="problem">
   <div class="sec-tag">The Problem</div>
-  <h2 class="sec-h">80% of traders fail evaluations</h2>
-  <p class="sec-sub">Not because their strategies are bad &mdash; because they violate rules they didn't check in advance.</p>
+  <h2 class="sec-h">You didn't fail. A rule you didn't know about failed you.</h2>
+  <p class="sec-sub">Most evaluation failures aren't strategy failures. They're rule mismatches &mdash; trailing drawdown calculations you didn't run, position size limits you didn't count, consistency requirements buried in the fine print.</p>
 
   <div class="stat-grid">
     <div class="stat-card">
-      <div class="stat-num">$2&ndash;5B</div>
-      <div class="stat-label">Spent on evaluations annually</div>
+      <div class="stat-num">2&ndash;5x</div>
+      <div class="stat-label">Most traders pay for 2&ndash;5 evaluations<br>before their first payout</div>
     </div>
     <div class="stat-card">
       <div class="stat-num">80%</div>
@@ -597,8 +604,8 @@ footer{
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-title">Get Your Score</div>
-      <div class="step-desc">PASS or FAIL on every rule. See exactly where you'd fail &mdash; before you pay.</div>
+      <div class="step-title">Read Your Verdict</div>
+      <div class="step-desc">Every rule. Every violation. Exactly how far you are from the target, where your sizing broke, and which firm fits your actual trading.</div>
     </div>
   </div>
 </section>
@@ -608,9 +615,8 @@ footer{
 <!-- MULTI-FIRM COMPARISON -->
 <section id="comparison">
   <div class="comparison-heading">
-    <div class="sec-tag">The Conversion Moment</div>
     <h2 class="sec-h" style="text-align:center">Same trades. Different verdicts.</h2>
-    <p class="sec-sub" style="text-align:center">Your strategy might pass one firm and fail another. See which one fits.</p>
+    <p class="sec-sub" style="text-align:center">Your strategy isn't broken. You've been taking the wrong test. See which firm's rules match your actual trading.</p>
   </div>
 
   <div class="firm-grid">
@@ -619,7 +625,7 @@ footer{
     <div class="firm-card">
       <div class="firm-header">
         <div>
-          <div class="firm-name">TPT</div>
+          <h3 class="firm-name">TPT</h3>
           <div class="firm-account">$50K Evaluation</div>
         </div>
         <span class="verdict verdict-pass">Pass</span>
@@ -662,13 +668,14 @@ footer{
         <span class="firm-verdict-label">Verdict</span>
         <span class="verdict verdict-pass">Pass</span>
       </div>
+      <div class="firm-verified">Rules verified March 2026</div>
     </div>
 
     <!-- FTMO $50K -->
     <div class="firm-card">
       <div class="firm-header">
         <div>
-          <div class="firm-name">FTMO</div>
+          <h3 class="firm-name">FTMO</h3>
           <div class="firm-account">$50K Phase 1</div>
         </div>
         <span class="verdict verdict-fail">Fail</span>
@@ -705,13 +712,14 @@ footer{
         <span class="firm-verdict-label">Verdict</span>
         <span class="verdict verdict-fail">Fail</span>
       </div>
+      <div class="firm-verified">Rules verified March 2026</div>
     </div>
 
     <!-- Apex $50K -->
     <div class="firm-card">
       <div class="firm-header">
         <div>
-          <div class="firm-name">Apex</div>
+          <h3 class="firm-name">Apex</h3>
           <div class="firm-account">$50K EOD</div>
         </div>
         <span class="verdict verdict-fail">Fail</span>
@@ -748,6 +756,7 @@ footer{
         <span class="firm-verdict-label">Verdict</span>
         <span class="verdict verdict-fail">Fail</span>
       </div>
+      <div class="firm-verified">Rules verified March 2026</div>
     </div>
 
   </div>
@@ -795,7 +804,7 @@ footer{
 <!-- WHAT YOU GET -->
 <section id="features">
   <div class="sec-tag">What You Get</div>
-  <h2 class="sec-h">Every rule checked. Every violation shown.</h2>
+  <h2 class="sec-h">Everything that can disqualify you &mdash; flagged before you pay.</h2>
 
   <div class="feature-list">
     <div class="feature-item"><span class="feature-n">01</span><span class="feature-text">Trailing, static, and EOD drawdown evaluation</span></div>
@@ -814,8 +823,8 @@ footer{
 <!-- FINAL CTA -->
 <section id="cta">
   <div class="cta-glow"></div>
-  <h2 class="cta-h">Stop paying <em>to find out.</em></h2>
-  <p class="cta-sub">Score your first trade history. <strong>Free.</strong></p>
+  <h2 class="cta-h">Your next evaluation <em>starts here.</em></h2>
+  <p class="cta-sub">Score your trades before you pay. Know exactly which firm fits your style &mdash; and which rules you'd break.</p>
   <a href="https://app.driftsentinel.io/signup" class="btn-main" style="font-size:12px;padding:18px 48px">Get Started</a>
 </section>
 
